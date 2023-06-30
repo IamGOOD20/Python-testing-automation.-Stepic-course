@@ -1,2 +1,3 @@
-# Python-testing-automation.-Stepic-course
-Learning and practicing testing in Python. Course on the Stepik platform.
+# Python testing automation.
+## Goals: learning automated testing in Python.
+## Tools: Python, Selenium, PyTest, Unittest, Pycharm
