@@ -1,3 +1,27 @@
+Searching elements:
+id - #id
+tag - tag
+attribute - [id="world"]
+name - [name="bullet-cat"]
+class - .class-class (if it has space = .class-class.class)
+
+CSS selectors
+#post2 .title
+#post2 > div.title - что нужно взять элемент с тегом и классом: div.title,
+                     который находится строго на один уровень иерархии ниже чем элемент #post2.
+                     Для этого используется символ >
+
+#posts > .item:nth-child(2) > .title - Псевдо-класс :nth-child(2) — позволяет найти второй по порядку элемент среди
+                                       дочерних элементов
+# https://learn.javascript.ru/css-selectors
+# https://www.w3schools.com/cssref/css_selectors.asp
+# https://developer.mozilla.org/ru/docs/Web/CSS/CSS_Selectors
+
+XPath
+XPath - https://selenium-python.readthedocs.io/locating-elements.html#locating-elements
+
+Selenium methods:
+
 find_element(By.ID, value) — поиск по уникальному атрибуту id элемента.
 Если ваши разработчики проставляют всем элементам в приложении уникальный id, то вам повезло,
 и вы чаще всего будет использовать этот метод, так как он наиболее стабильный;
@@ -31,6 +55,10 @@ link.click()
 
 link = browser.find_element(By.PARTIAL_LINK_TEXT, "Math") - элемент со ссылкой по подстроке
 link.click()
+
+1.6.6
+find_elements - вернёт список всех найденных элементов по заданному условию
+
 
 
 
