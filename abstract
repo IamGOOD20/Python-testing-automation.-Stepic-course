@@ -60,5 +60,6 @@ link.click()
 find_elements - вернёт список всех найденных элементов по заданному условию
 
 
-
+2.1.6
+get_attribute - проверка на наличие атрибута. text() not need to use
 
