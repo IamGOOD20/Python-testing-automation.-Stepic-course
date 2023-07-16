@@ -88,3 +88,40 @@ select.select_by_index(index) - index
 
     browser.execute_script("document.title='Script executing';alert('Robots at work');")
 
+2.2.7 РАБОТА С ФАЙЛОВОЙ СИСТЕМОЙ
+    element.send_keys(file_path)
+
+
+2.3 Working with windows
+
+alert
+    1. переключиться на окно с alert, а затем принять его с помощью команды accept():
+    alert = browser.switch_to.alert
+    alert.accept()
+
+    Чтобы получить текст из alert, используйте свойство text объекта alert:
+
+    alert = browser.switch_to.alert
+    alert_text = alert.text
+
+    2. another way: confirm (buttons: accept/no)
+        confirm = browser.switch_to.alert
+        confirm.accept()
+
+        Для confirm-окон можно использовать следующий метод для отказа:
+            confirm.dismiss()
+
+    3. prompt — имеет дополнительное поле для ввода текста. Чтобы ввести текст, используйте метод send_keys():
+        prompt = browser.switch_to.alert
+        prompt.send_keys("My answer")
+        prompt.accept()
+
+2.3 ПЕРЕХОД НА НОВУЮ ВКЛАДКУ
+    browser.switch_to.window(window_name) - переключения на новую вкладку надо явно указать,
+                                            на какую вкладку мы хотим перейти
+
+    new_window = browser.window_handles[index] - возвращает массив имён всех вкладок.
+
+    first_window = browser.window_handles[0] - запомнить имя текущей вкладки, чтобы иметь возможность потом к ней вернуться
+
+        current_window = browser.current_window_handle - покажут текущую вкладку
