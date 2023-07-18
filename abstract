@@ -125,3 +125,34 @@ alert
     first_window = browser.window_handles[0] - запомнить имя текущей вкладки, чтобы иметь возможность потом к ней вернуться
 
         current_window = browser.current_window_handle - покажут текущую вкладку
+
+2.4 ОЖИДАНИЕ ОТКРЫТИЯ НОВОЙ СТРАНИЦЫ Selenium Waits (Implicit Waits)
+    browser.implicitly_wait(5) - не надо явно указывать каждый раз, когда мы выполняем поиск элементов,
+                                 оно автоматически будет применяться при вызове каждой последующей команды.
+
+EXEPTIONS:
+    NoSuchElementException - не был найден за отведенное время
+    StaleElementReferenceException - Если элемент был найден в момент поиска,
+                                     но при последующем обращении к элементу DOM изменился
+    ElementNotVisibleException - элемент был найден в момент поиска,
+                                 но сам элемент невидим (например, имеет нулевые размеры),
+                                 и реальный пользователь не смог бы с ним взаимодействовать
+
+    expected_conditions - ожидание кликабельности
+            from selenium.webdriver.support.ui import WebDriverWait
+            from selenium.webdriver.support import expected_conditions as EC
+            button = WebDriverWait(browser, 5).until(
+            EC.element_to_be_clickable((By.ID, "verify"))
+            )
+
+            !!! В модуле expected_conditions есть много других правил,
+                которые позволяют реализовать необходимые ожидания:
+                https://selenium-python.readthedocs.io/api.html#module-selenium.webdriver.support.expected_conditions
+
+            Если мы захотим проверять, что кнопка становится неактивной после отправки данных,
+            то можно задать негативное правило с помощью метода until_not:
+
+            # говорим Selenium проверять в течение 5 секунд пока кнопка станет неактивной
+            button = WebDriverWait(browser, 5).until_not(
+            EC.element_to_be_clickable((By.ID, "verify"))
+            )
