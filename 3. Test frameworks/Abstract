@@ -1,0 +1,5 @@
+3.2.12 Unittest
+
+1. the name of file should start with "test":  def test_name_for_your_test():
+2. Тесты обязательно должны находиться в специальном тестовом классе.
+3. Вместо assert должны использоваться специальные assertion методы.
