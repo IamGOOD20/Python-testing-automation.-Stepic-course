@@ -1,3 +1,4 @@
+import unittest
 # def test_abs1():
 #     assert abs(-42) == 42, "Should be absolute value of number"
 #
@@ -17,7 +18,7 @@
 #     test_abs2()
 #     print("Everything passed")
 
-import unittest
+
 
 class TestAbs(unittest.TestCase):
 
