@@ -157,8 +157,3 @@ EXEPTIONS:
             EC.element_to_be_clickable((By.ID, "verify"))
             )
 
-3.2 Unittest
-    class TestPage(unittest.TestCase):
-        pass
-
-        self.assertEqual()
