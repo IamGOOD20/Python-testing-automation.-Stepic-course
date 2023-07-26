@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 link = 'http://selenium1py.pythonanywhere.com/'
 
 class TestMainPage1():
-
+    '''!!!!the browser will be open one time for 2 tests'''
     @classmethod
     def setup_class(self):
         print('\nstart browser for test suite . . ')
@@ -25,7 +25,8 @@ class TestMainPage1():
         self.browser.find_element(By.CSS_SELECTOR, '.basket-mini .btn-group > a')
 
 class TestMainPage2():
-
+    '''!!!!the browser will be open two times for 2 tests
+                recommended!!!'''
     def setup_method(self):
         print("start browser for test..")
         self.browser = webdriver.Chrome()
