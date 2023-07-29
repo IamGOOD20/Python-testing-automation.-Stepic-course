@@ -188,3 +188,82 @@ with pytest.raises() - проверка на содержание элемент
         https://habr.com/ru/company/yandex/blog/242795/
 
         https://docs.pytest.org/en/stable/fixture.html
+
+    3.5 МАРКИРОВКА:
+        мы можем "отключать" тесты которые нам не нужны сейчас, понадобятся при релизе или других ситуациях. Маркируем и
+        создаём обьяснение в корне проекта, для того чтоб не было вопросов у Pytest.
+        smoke test - критические тесты
+        regression test - регрессионные и запускать их только перед релизом.
+
+        @pytest.mark.mark_name, где mark_name — произвольная строка.
+
+            class TestMainPage1():
+
+                @pytest.mark.smoke
+                def test_guest_should_see_login_link(self, browser):
+                    browser.get(link)
+                    browser.find_element(By.CSS_SELECTOR, "#login_link")
+
+                @pytest.mark.regression
+                def test_guest_should_see_basket_link_on_the_main_page(self, browser):
+                    browser.get(link)
+                    browser.find_element(By.CSS_SELECTOR, ".basket-mini .btn-group > a")
+
+        Чтобы запустить тест с нужной маркировкой, нужно передать в командной строке параметр -m и нужную метку:
+
+                pytest -s -v -m smoke test_fixture8.py
+
+        НЕОБОДИМО ЗАРЕГЕСТРИРОВАТЬ МЕТКИ в корневой папке проекта:
+        create file pytest.ini
+            [pytest]
+            markers =
+                smoke: marker for smoke tests
+                regression: marker for regression tests
+
+        Чтобы запустить все тесты, не имеющие заданную маркировку, можно использовать инверсию.
+            pytest -s -v -m "not smoke" test_fixture8.py
+
+        Для запуска тестов с разными метками можно использовать логическое ИЛИ. Запустим smoke и regression-тесты:
+            pytest -s -v -m "smoke or regression" test_fixture8.py
+
+
+        Комбинированные маркеры:
+            pytest -s -v -m "smoke and win10" test_fixture81.py
+
+        class TestMainPage1:
+
+            @pytest.mark.smoke
+            def test_guest_should_see_login_link(self, browser):
+                browser.get(link)
+                browser.find_element(By.CSS_SELECTOR, "#login_link")
+
+            @pytest.mark.smoke
+            @pytest.mark.win10
+            def test_guest_should_see_basket_link_on_the_main_page(self, browser):
+                browser.get(link)
+                browser.find_element(By.CSS_SELECTOR, ".basket-mini .btn-group > a")
+
+        XFail - Отметить тест как падающий, помечаем чтоб не забыть
+
+            @pytest.mark.xfail
+            def test_guest_should_see_search_button_on_the_main_page(self, browser):
+                browser.get(link)
+                browser.find_element(By.CSS_SELECTOR, "button.favorite")]
+
+            pytest -v test_fixture10.py
+
+            к маркировке xfail можно добавлять параметр reason
+
+            @pytest.mark.xfail(reason="fixing this bug right now")
+            def test_guest_should_see_search_button_on_the_main_page(self, browser):
+                browser.get(link)
+                browser.find_element(By.CSS_SELECTOR, "button.favorite")
+
+            pytest -rx -v test_fixture10a.py
+            pytest -rX -v test_fixture10b.py - более подробная инфо
+
+            как пропускать тест только при выполнении условия, как сделать так,
+            чтобы внезапно прошедший xfailed тест в отчете стал красным,
+
+            и так далее. ---> https://pytest.org/en/stable/skipping.html - документацыя
+
