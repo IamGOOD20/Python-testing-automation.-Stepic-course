@@ -267,3 +267,46 @@ with pytest.raises() - проверка на содержание элемент
 
             и так далее. ---> https://pytest.org/en/stable/skipping.html - документацыя
 
+    3.6 PyTest — параметризация, конфигурирование, плагины
+        Conftest.py — конфигурация тестов
+        Создадим файл conftest.py в корневом каталоге нашего тестового проекта и перенесем туда фикстуру browser.
+        Позволит не прописывать фикстуру в каждом тесте
+        conftest.py:
+
+        import pytest
+        from selenium import webdriver
+        from selenium.webdriver.common.by import By
+
+        @pytest.fixture(scope="function")
+        def browser():
+            print("\nstart browser for test..")
+            browser = webdriver.Chrome()
+            yield browser
+            print("\nquit browser..")
+            browser.quit()
+
+        Теперь, сколько бы файлов с тестами мы ни создали, у тестов будет доступ к фикстуре browser.
+        ОЧЕНЬ ВАЖНО!
+        elenium_course_solutions/
+        ├── section3
+        │   └── conftest.py
+        │   └── test_languages.py
+        ├── section4
+        │   └── conftest.py
+        │   └── test_main_page.py
+
+        Параметризация тестов
+        @pytest.mark.parametrize()
+
+            @pytest.mark.parametrize('language', ["ru", "en-gb"]) - запустит в двух языках
+            def test_guest_should_see_login_link(browser, language): КАВЫЧКИ!
+                link = f"http://selenium1py.pythonanywhere.com/{language}/"
+                browser.get(link)
+                browser.find_element(By.CSS_SELECTOR, "#login_link")
+
+        Параетры также можно задавать для целого класса:
+            @pytest.mark.parametrize('language', ["ru", "en-gb"])
+            class TestLogin:
+                def test_guest_should_see_login_link(self, browser, language):
+
+        документация: https://docs.pytest.org/en/latest/how-to/parametrize.html?highlight=parametrize
