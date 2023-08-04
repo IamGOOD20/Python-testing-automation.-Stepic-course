@@ -304,9 +304,54 @@ with pytest.raises() - проверка на содержание элемент
                 browser.get(link)
                 browser.find_element(By.CSS_SELECTOR, "#login_link")
 
-        Параетры также можно задавать для целого класса:
+        Параметры также можно задавать для целого класса:
             @pytest.mark.parametrize('language', ["ru", "en-gb"])
             class TestLogin:
                 def test_guest_should_see_login_link(self, browser, language):
 
         документация: https://docs.pytest.org/en/latest/how-to/parametrize.html?highlight=parametrize
+
+
+        Conftest.py и передача параметров в командной строке
+        https://docs.pytest.org/en/latest/example/simple.html?highlight=addoption
+
+        pytest_addoption и фикстурa request
+        Сначала добавляем в файле conftest обработчик опции в функции pytest_addoption,
+        затем напишем фикстуру, которая будет обрабатывать переданные в опции данные
+
+        def pytest_addoption(parser):
+               parser.addoption('--browser_name', action='store', default=None, help="Choose browser: chrome or firefox")
+
+        @pytest.fixture(scope="function")
+        def browser(request):
+            browser_name = request.config.getoption("browser_name")
+            browser = None
+            if browser_name == "chrome":
+                print("\nstart chrome browser for test..")
+                browser = webdriver.Chrome()
+            elif browser_name == "firefox":
+                print("\nstart firefox browser for test..")
+                browser = webdriver.Firefox()
+            else:
+                raise pytest.UsageError("--browser_name should be chrome or firefox")
+            yield browser
+            print("\nquit browser..")
+            browser.quit()
+        ПАРАМЕТРЫ КОМАНДНОЙ СТРОКИ
+            pytest -s -v --browser_name=chrome test_parser.py
+
+        3.6.8 Плагины и перезапуск тестов
+        Полный список доступных плагинов доступен, https://docs.pytest.org/en/latest/reference/plugin_list.html
+
+        pytest-rerunfailures - перезагружает упавший тест
+        https://docs.pytest.org/en/stable/usage.html#modifying-python-traceback-printing
+            добавить в командную строку "--reruns n" - n - количество перезапусков
+            "--tb=line" - сократить лог с результатами теста
+            https://docs.pytest.org/en/stable/usage.html#modifying-python-traceback-printing
+        ПАРАМЕТРЫ КОМАНДНОЙ СТРОКИ:
+            pytest -v --tb=line --reruns 1 --browser_name=chrome test_rerun.py
+            "--tb=line", чтобы сократить лог с результатами теста
+            https://docs.pytest.org/en/stable/usage.html#modifying-python-traceback-printing -- настройки вывода в документации PyTest
+
+        3.6.9 Запуск автотестов для разных языков интерфейса
+            
