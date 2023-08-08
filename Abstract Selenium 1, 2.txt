@@ -66,7 +66,7 @@ get_attribute - проверка на наличие атрибута. text() no
 
 
 2.2 FILES, LISTS, Javascript
-Select - удобный способ для работы с выпвдвющими и видимыми списками
+Select - удобный способ для работы с выпадающими и видимыми списками
         from selenium.webdriver.support.ui import Select
 select_by_value(value) - ищем элемент
 select.select_by_visible_text("text") - text
