@@ -3,14 +3,14 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 
-link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/coders-at-work_207/"
+link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
 
 def pytest_addoption(parser):
     parser.addoption('--language', action='store', help='language of browser can be: [ru, en, fr, es ...]')
 
 @pytest.fixture(scope='class')
 def browser(request):
-    print('\nfinal project start browser')
+    print('\nsolution 1 start browser')
     browser = webdriver.Chrome()
     language = request.config.getoption('language')
     if language:
@@ -20,7 +20,7 @@ def browser(request):
     else:
         raise pytest.UsageError('parameter not specified --language="language"')
     yield browser
-    print('\nfinal project quit browser')
+    print('\nsolution 1 quit browser')
     browser.quit()
 
 

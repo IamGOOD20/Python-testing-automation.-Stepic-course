@@ -340,7 +340,7 @@ with pytest.raises() - проверка на содержание элемент
         ПАРАМЕТРЫ КОМАНДНОЙ СТРОКИ
             pytest -s -v --browser_name=chrome test_parser.py
 
-        3.6.8 Плагины и перезапуск тестов
+    3.6.8 Плагины и перезапуск тестов
         Полный список доступных плагинов доступен, https://docs.pytest.org/en/latest/reference/plugin_list.html
 
         pytest-rerunfailures - перезагружает упавший тест
@@ -353,5 +353,19 @@ with pytest.raises() - проверка на содержание элемент
             "--tb=line", чтобы сократить лог с результатами теста
             https://docs.pytest.org/en/stable/usage.html#modifying-python-traceback-printing -- настройки вывода в документации PyTest
 
-        3.6.9 Запуск автотестов для разных языков интерфейса
-            
+    3.6.9 Запуск автотестов для разных языков интерфейса:
+        Укажем чтоб сервер сам решал, какой язык интерфейса нужно отобразить, основываясь на данных браузера.
+        Браузер передает данные о языке пользователя через запросы к серверу,
+        указывая в Headers (заголовке запроса) параметр accept-language.
+
+        from selenium.webdriver.chrome.options import Options
+
+        options = Options()
+        options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
+        browser = webdriver.Chrome(options=options)
+
+        Для Firefox объявление нужного языка будет выглядеть немного иначе:
+        fp = webdriver.FirefoxProfile()
+        fp.set_preference("intl.accept_languages", user_language)
+        browser = webdriver.Firefox(firefox_profile=fp)
+
